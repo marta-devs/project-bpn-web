@@ -1,5 +1,7 @@
 export function Home() {
-    return (
-        <h1>Olá, Mundo!</h1>
-    )
+	function test() {
+		console.log('bem vindo');
+	}
+
+	return <h1>Olá, Mundo!</h1>;
 }
