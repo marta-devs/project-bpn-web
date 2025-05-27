@@ -13,18 +13,18 @@ export class AxiosProvider{
 	}
 
   async postter(url: string, data: any){
-    await this.axiosProvider?.post(url, data)
+    return await this.axiosProvider?.post(url, data)
   }
 
-  async delleter (url: string){
-    await this.axiosProvider?.delete(url)
+  async delleter (url: string, id: string){
+    return await this.axiosProvider?.delete(`${url}/${id}`)
   }
 
-  async updatter (url: string, data: any){
-    await this.axiosProvider?.put(url, data)
+  async updatter (url: string, id: string, data: any){
+   return await this.axiosProvider?.put(`${url}/${id}`, data)
   }
 
-  async patcher (url: string, data: any){
-    await this.axiosProvider?.patch(url, data)
+  async patcher (url: string, id: string, data: any){
+    return await this.axiosProvider?.patch(`${url}/${id}`, data)
   }
 }

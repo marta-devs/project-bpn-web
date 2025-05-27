@@ -13,9 +13,9 @@ const formUserSchema = z.object({
 
 type FormUserData = z.infer<typeof formUserSchema>
 
-export function Home() {
+export function Example() {
   const { mutate, isPending } = baseHookQuery.useCreate('/user');
-	const { data: usuarios } = baseHookQuery.useGetByAll('/user');
+  const { data: usuarios } = baseHookQuery.useGetByAll('/user');
   const {register, handleSubmit, formState: {errors} } = useForm<FormUserData>({
     mode: "all",
     resolver: zodResolver(formUserSchema)
@@ -29,8 +29,8 @@ export function Home() {
     })
   }
 
-	return (
-		<div>
+  return (
+    <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input type="text" {...register("username")} placeholder='Digite o seu nickname...'/>
         <input type="text" {...register("funcao")} placeholder='Digite o seu nickname...' />
@@ -38,13 +38,13 @@ export function Home() {
         <button type="submit">{isPending ? 'Loading...':'Enviar'}</button>
       </form>
 
-			{usuarios.map((usuario) => (
-				<div key={usuario.id}>
-					<span>{usuario.username}</span>
-					<span>{usuario.funcao}</span>
-					<span>{usuario.status}</span>
-				</div>
-			))}
-		</div>
-	);
+      {usuarios.map((usuario) => (
+        <div key={usuario.id}>
+          <span>{usuario.username}</span>
+          <span>{usuario.funcao}</span>
+          <span>{usuario.status}</span>
+        </div>
+      ))}
+    </div>
+  );
 }
