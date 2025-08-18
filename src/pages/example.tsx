@@ -31,20 +31,7 @@ export function Example() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" {...register("username")} placeholder='Digite o seu nickname...'/>
-        <input type="text" {...register("funcao")} placeholder='Digite o seu nickname...' />
-
-        <button type="submit">{isPending ? 'Loading...':'Enviar'}</button>
-      </form>
-
-      {usuarios.map((usuario) => (
-        <div key={usuario.id}>
-          <span>{usuario.username}</span>
-          <span>{usuario.funcao}</span>
-          <span>{usuario.status}</span>
-        </div>
-      ))}
+      Example
     </div>
   );
 }

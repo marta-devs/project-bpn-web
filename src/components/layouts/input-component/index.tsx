@@ -9,7 +9,7 @@ interface Props extends React.ComponentProps<"input">{
 export const InputComponent = ( props: Props) => {
   return (
     <div className="mb-1">
-    <label htmlFor={props.id} className="font-bold">
+    <label htmlFor={props.id} className="font-bold text-sm">
       {props.label}
     </label>
       <Input

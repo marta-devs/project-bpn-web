@@ -13,14 +13,15 @@ import imageBarco from "../../assets/images/foto-barco.jpg";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AuthContext } from "../../context/auth-context";
 import { useContext } from "react";
 import { InputComponent } from "@/components/layouts/input-component";
+import { useAuth } from "@/hooks/use-auth.store";
+import { useNavigate } from "react-router";
 
 const images = [imageBarco]; // Adicione mais imagens se quiser
 
 const loginUserSchema = z.object({
-  username: z.string().nonempty("O campo username e obrigatório"),
+  login: z.string().nonempty("O campo login é obrigatório"),
   password: z
     .string()
     .nonempty("O campo senha e obrigatorio")
@@ -28,7 +29,6 @@ const loginUserSchema = z.object({
 });
 
 export function Login() {
-  const { handleLogin, isLoading } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -37,7 +37,8 @@ export function Login() {
     mode: "all",
     resolver: zodResolver(loginUserSchema),
   });
-
+  const navigate = useNavigate()
+  const {isLoading, onLogin } = useAuth()
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [totalItems, setTotalItems] = useState(images.length);
@@ -54,7 +55,12 @@ export function Login() {
   }, [carouselApi]);
 
   async function handleData(data: any) {
-    handleLogin("http://localhost:3333/api/v1/usuario/login", data);
+    try {
+      await onLogin("usuario/login", data);
+      navigate('/')
+    } catch (error) {
+      alert(error)
+    }
   }
 
   return (
@@ -92,7 +98,6 @@ export function Login() {
           ))}
         </div>
       </div>
-
       
       <section className="absolute z-10 inset-0 flex items-center justify-end pr-32">
         <div className="bg-white/95 rounded-2xl h-[97vh] shadow-2xl w-full max-w-md pt-6 p-10 flex flex-col items-center backdrop-blur-md border border-gray-200">
@@ -104,7 +109,7 @@ export function Login() {
             />
             <h1 className="text-lg font-semibold text-center">BATALHÃO DE POLICIA NAVAL DE ANGOLA</h1>
             <p className="text-gray-500 text-center text-sm mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Preencha todos os campos para acessar o sistema
             </p>
           </div>
          
@@ -115,11 +120,11 @@ export function Login() {
           >
             <InputComponent
               className="h-12"
-              placeholder="Digite o seu username"
-              label="Username"
+              placeholder="Digite o seu NIP ou Username"
+              label="Username/NIP"
               id="username"
-              error={errors.username}
-              {...register('username')}
+              error={errors.login}
+              {...register('login')}
             />
              
             <InputComponent
@@ -132,7 +137,7 @@ export function Login() {
             />
             
             <div className="flex justify-end mb-2">
-              <span className="text-sm text-gray-500 hover:underline">Esqueceste-te a senha?</span>
+              <span className="text-sm text-[#6B7A31]/90 hover:underline">Esqueceste-te a senha?</span>
             </div>
             <Button
               disabled={isLoading}
@@ -143,7 +148,7 @@ export function Login() {
             </Button>
           </form>
           <p className="text-gray-400 text-xs mt-8 text-center">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Todos os direitos reservados à Marta.Tech.
           </p>
         </div>
       </section>
